@@ -99,10 +99,10 @@ dependencies {
     implementation 'com.github.yuriy-budiyev:code-scanner:2.3.2'
 
     // SimpleCropView (JitPack – requires 'v' tag and @aar)
-    implementation 'com.github.IsseiAoki:SimpleCropView:v1.1.8@aar'
+    implementation 'com.github.IsseiAoki:SimpleCropView:1.1.8@aar'
 
     // SingleDateAndTimePicker (JitPack – requires 'v' tag and @aar)
-    implementation 'com.github.florent37:SingleDateAndTimePicker:v2.2.6@aar'
+    implementation 'com.github.florent37:SingleDateAndTimePicker:2.2.6@aar'
 
     // VCard Parser
     implementation 'com.googlecode.ez-vcard:ez-vcard:0.11.0'
