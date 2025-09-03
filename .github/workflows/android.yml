@@ -48,9 +48,9 @@ jobs:
           java -version
           $HOME/gradle-7.2/bin/gradle -v
 
-      - name: Build Debug APK
-        run: |
-          $HOME/gradle-7.2/bin/gradle --no-daemon --stacktrace clean assembleDebug
+      - name: Build GooglePlay Debug APK
+  run: |
+    $HOME/gradle-7.2/bin/gradle --no-daemon --stacktrace clean :app:assembleGooglePlayDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
