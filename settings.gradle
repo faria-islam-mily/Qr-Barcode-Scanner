@@ -1,15 +1,12 @@
-// 1) MUST come first
 pluginManagement {
     repositories {
         google()
         mavenCentral()
+        gradlePluginPortal()
         maven { url 'https://jitpack.io' }
     }
 }
-
-
 dependencyResolutionManagement {
-    // let settings.gradle control repos
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         google()
@@ -18,6 +15,5 @@ dependencyResolutionManagement {
     }
 }
 
-// 2) Then project name + modules
-rootProject.name = 'BarcodeScanner'
-include ':app'
+rootProject.name = "BarcodeScanner"
+include(":app")
