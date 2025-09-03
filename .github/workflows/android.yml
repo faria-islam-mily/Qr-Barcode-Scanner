@@ -2,17 +2,15 @@ name: Android CI (Debug APK)
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ master, main ]
 
 jobs:
-  build:
+  build-debug:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # sdkmanager needs Java 17
+      # Use Java 17 for sdkmanager (new cmdline tools require 17)
       - name: Set up JDK 17 (for sdkmanager)
         uses: actions/setup-java@v4
         with:
@@ -24,36 +22,43 @@ jobs:
 
       - name: Install SDK components
         run: |
-          sdkmanager --install "platform-tools" \
-                               "platforms;android-31" "build-tools;31.0.0" \
-                               "platforms;android-30" "build-tools;30.0.3" \
-                               "platforms;android-34" "build-tools;34.0.0"
+          sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0"
           yes | sdkmanager --licenses
 
-      # Build must use Java 11 for AGP 7.0.2
+      # Switch to Java 11 for the Gradle/AGP 7.0.x build
       - name: Set up JDK 11 (for Gradle/AGP)
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '11'
 
-      # Download and use Gradle 7.2 explicitly (don't rely on system gradle)
+      # Install and pin Gradle 7.2 (project has no ./gradlew)
       - name: Install Gradle 7.2
         run: |
           wget https://services.gradle.org/distributions/gradle-7.2-bin.zip -O /tmp/gradle-7.2-bin.zip
           unzip -q /tmp/gradle-7.2-bin.zip -d $HOME
+          echo "$HOME/gradle-7.2/bin" >> $GITHUB_PATH
 
       - name: Verify tools
         run: |
           java -version
           $HOME/gradle-7.2/bin/gradle -v
 
+      # Try Google Play flavor; if it doesn't exist, fall back to default debug
       - name: Build GooglePlay Debug APK
-  run: |
-    $HOME/gradle-7.2/bin/gradle --no-daemon --stacktrace clean :app:assembleGooglePlayDebug
+        run: |
+          set -e
+          if $HOME/gradle-7.2/bin/gradle :app:tasks --all | grep -q "assembleGooglePlayDebug"; then
+            $HOME/gradle-7.2/bin/gradle --no-daemon --stacktrace clean :app:assembleGooglePlayDebug
+          else
+            echo "assembleGooglePlayDebug not found; building :app:assembleDebug instead"
+            $HOME/gradle-7.2/bin/gradle --no-daemon --stacktrace clean :app:assembleDebug
+          fi
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
+          path: |
+            app/build/outputs/apk/*/debug/*.apk
+            app/build/outputs/apk/debug/*.apk
