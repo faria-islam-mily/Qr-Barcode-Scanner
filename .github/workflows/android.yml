@@ -49,6 +49,12 @@ jobs:
           $HOME/gradle-7.2/bin/gradle --no-daemon --stacktrace clean :app:assembleDebug
 
 
+      - name: Show cropper dep + repos
+        run: |
+            grep -nE 'SimpleCropView|jitpack.io' app/build.gradle settings.gradle || true
+    
+
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
