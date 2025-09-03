@@ -101,8 +101,9 @@ dependencies {
     // SimpleCropView from Maven Central (no JitPack, no @aar)
 implementation 'com.isseiaoki:simplecropview:1.1.8'
 
-    // SingleDateAndTimePicker (JitPack – requires 'v' tag and @aar)
-    implementation 'com.github.florent37:SingleDateAndTimePicker:2.2.6@aar'
+   // Replace florent37 with Material components (no JitPack needed)
+implementation 'com.google.android.material:material:1.12.0'
+
 
     // VCard Parser
     implementation 'com.googlecode.ez-vcard:ez-vcard:0.11.0'
