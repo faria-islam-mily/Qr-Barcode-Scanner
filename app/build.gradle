@@ -98,7 +98,8 @@ dependencies {
     // Code Scanner (Maven Central – correct group)
     implementation 'com.github.yuriy-budiyev:code-scanner:2.3.2'
 
-implementation 'com.github.IsseiAoki:SimpleCropView:1.1.8@aar'
+implementation 'com.github.IsseiAoki:SimpleCropView:3b7a3a6b1b@aar'
+
 
 
    // Replace florent37 with Material components (no JitPack needed)
