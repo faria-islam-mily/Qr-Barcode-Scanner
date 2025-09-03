@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <paths>
-        <cache-path name="shared_images" path="images/"/>
-    </paths>
+    <paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- cache dir for temp images -->
+    <cache-path name="cache" path="images/" />
+    <external-cache-path name="ext_cache" path="images/" />
+</paths>
 </resources>
