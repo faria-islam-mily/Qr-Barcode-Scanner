@@ -1,9 +1,8 @@
 plugins {
-    id("io.sentry.android.gradle") version "3.0.1"
     id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-android-extensions'
+    id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'io.sentry.android.gradle' version '3.0.1'
 }
 
 sentry {
@@ -22,12 +21,12 @@ android {
         versionCode 12
         versionName "1.10"
         multiDexEnabled true
-        vectorDrawables.useSupportLibrary  true
+        vectorDrawables.useSupportLibrary true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = ["room.incremental":"true"]
+                arguments = ["room.incremental": "true"]
             }
         }
 
@@ -35,12 +34,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8.toString()
-        targetCompatibility = JavaVersion.VERSION_1_8.toString()
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = "1.8"
     }
 
     buildTypes {
@@ -61,6 +60,11 @@ android {
             buildConfigField "boolean", "ERROR_REPORTS_ENABLED_BY_DEFAULT", "false"
         }
     }
+
+    // Enable view binding (replacement for deprecated kotlin-android-extensions)
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -69,7 +73,7 @@ dependencies {
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    // Android
+    // AndroidX
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
@@ -77,49 +81,29 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     // Room
-    final roomVersion = "2.4.2"
+    def roomVersion = "2.4.2"
     kapt "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.room:room-rxjava2:$roomVersion"
 
-    // Paging
-    final pagingVersion = "1.0.1"
+    // Paging (legacy)
+    def pagingVersion = "1.0.1"
     implementation "android.arch.paging:runtime:$pagingVersion"
     implementation "android.arch.paging:rxjava2:$pagingVersion"
 
-    // Barcode Scanner
-    //implementation 'com.budiyev.android:code-scanner:2.1.0'
-
-    // Barcode Image Generator
-    //noinspection GradleDependency
-    //implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
-
-    // ZXing embedded from Maven Central (needs core too)
-    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
-    implementation 'com.google.zxing:core:3.5.3'
-    
-    // Code Scanner (newer version on Maven Central)
-    //implementation 'com.budiyev.android:code-scanner:2.3.2'
-    
-    // SimpleCropView – available via JitPack
-    implementation 'com.github.IsseiAoki:SimpleCropView:1.1.8'
-    
-    // SingleDateAndTimePicker – via JitPack
-    implementation 'com.github.florent37:SingleDateAndTimePicker:2.2.6'
-
-    // ZXing embedded (Maven Central) + core (required)
+    // ZXing embedded (Maven Central) + core
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
     implementation 'com.google.zxing:core:3.5.3'
 
-    // Code Scanner (correct group on Maven Central)
+    // Code Scanner (Maven Central – correct group)
     implementation 'com.github.yuriy-budiyev:code-scanner:2.3.2'
 
-    // SimpleCropView — use JitPack fork (original JCenter artifact is gone)
-    implementation 'com.github.luciofm:SimpleCropView:1.1.8'
+    // SimpleCropView (JitPack – requires 'v' tag and @aar)
+    implementation 'com.github.IsseiAoki:SimpleCropView:v1.1.8@aar'
 
-    // SingleDateAndTimePicker — JitPack artifact ID matches repo name (case-sensitive)
-    implementation 'com.github.florent37:SingleDateAndTimePicker:2.2.6'
-    
+    // SingleDateAndTimePicker (JitPack – requires 'v' tag and @aar)
+    implementation 'com.github.florent37:SingleDateAndTimePicker:v2.2.6@aar'
+
     // VCard Parser
     implementation 'com.googlecode.ez-vcard:ez-vcard:0.11.0'
 
@@ -132,12 +116,6 @@ dependencies {
     // Rx
     implementation "io.reactivex.rxjava2:rxkotlin:2.3.0"
     implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:2.2.0"
-
-    // Image Crop Library
-    //implementation 'com.isseiaoki:simplecropview:1.1.8'
-
-    // Date time picker
-    //implementation 'com.github.florent37:singledateandtimepicker:2.2.6'
 
     // Sentry
     implementation 'io.sentry:sentry-android:5.7.1'
