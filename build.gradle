@@ -17,10 +17,12 @@ buildscript {
 allprojects {
     repositories {
         google()
+        mavenCentral()                // ✅ add this
         maven { url "https://jitpack.io" }
-        jcenter()
+        // jcenter()                   // optional: remove or leave, but it's deprecated
     }
 }
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir
