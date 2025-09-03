@@ -99,7 +99,7 @@ dependencies {
     implementation 'com.google.zxing:core:3.5.3'
     
     // Code Scanner (newer version on Maven Central)
-    implementation 'com.budiyev.android:code-scanner:2.3.2'
+    //implementation 'com.budiyev.android:code-scanner:2.3.2'
     
     // SimpleCropView – available via JitPack
     implementation 'com.github.IsseiAoki:SimpleCropView:1.1.8'
@@ -107,6 +107,18 @@ dependencies {
     // SingleDateAndTimePicker – via JitPack
     implementation 'com.github.florent37:SingleDateAndTimePicker:2.2.6'
 
+    // ZXing embedded (Maven Central) + core (required)
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+    implementation 'com.google.zxing:core:3.5.3'
+
+    // Code Scanner (correct group on Maven Central)
+    implementation 'com.github.yuriy-budiyev:code-scanner:2.3.2'
+
+    // SimpleCropView — use JitPack fork (original JCenter artifact is gone)
+    implementation 'com.github.luciofm:SimpleCropView:1.1.8'
+
+    // SingleDateAndTimePicker — JitPack artifact ID matches repo name (case-sensitive)
+    implementation 'com.github.florent37:SingleDateAndTimePicker:2.2.6'
     
     // VCard Parser
     implementation 'com.googlecode.ez-vcard:ez-vcard:0.11.0'
@@ -122,10 +134,10 @@ dependencies {
     implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:2.2.0"
 
     // Image Crop Library
-    implementation 'com.isseiaoki:simplecropview:1.1.8'
+    //implementation 'com.isseiaoki:simplecropview:1.1.8'
 
     // Date time picker
-    implementation 'com.github.florent37:singledateandtimepicker:2.2.6'
+    //implementation 'com.github.florent37:singledateandtimepicker:2.2.6'
 
     // Sentry
     implementation 'io.sentry:sentry-android:5.7.1'
