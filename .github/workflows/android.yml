@@ -10,6 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # JDK 17 for sdkmanager
       - name: Set up JDK 17 (for sdkmanager)
         uses: actions/setup-java@v4
         with:
@@ -24,12 +25,14 @@ jobs:
           sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0"
           yes | sdkmanager --licenses
 
+      # Switch to JDK 11 for AGP 7.0.x
       - name: Set up JDK 11 (for Gradle/AGP)
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '11'
 
+      # Pin Gradle 7.2 (project has no ./gradlew)
       - name: Install Gradle 7.2
         run: |
           wget https://services.gradle.org/distributions/gradle-7.2-bin.zip -O /tmp/gradle-7.2-bin.zip
@@ -41,19 +44,14 @@ jobs:
           java -version
           $HOME/gradle-7.2/bin/gradle -v
 
-      - name: Build GooglePlay Debug APK
+      - name: Build Debug APK
         run: |
-          if $HOME/gradle-7.2/bin/gradle :app:tasks --all | grep -q "assembleGooglePlayDebug"; then
-            $HOME/gradle-7.2/bin/gradle --no-daemon --stacktrace clean :app:assembleGooglePlayDebug
-          else
-            echo "assembleGooglePlayDebug not found; building :app:assembleDebug instead"
-            $HOME/gradle-7.2/bin/gradle --no-daemon --stacktrace clean :app:assembleDebug
-          fi
+          $HOME/gradle-7.2/bin/gradle --no-daemon --stacktrace clean :app:assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk
           path: |
-            app/build/outputs/apk/*/debug/*.apk
             app/build/outputs/apk/debug/*.apk
+            app/build/outputs/apk/*/debug/*.apk
