@@ -47,8 +47,8 @@ jobs:
 
 
             - name: Show cropper dep + repos
-        run: |
-            grep -nE 'SimpleCropView|jitpack.io' app/build.gradle settings.gradle || true
+              run: |
+                grep -nE 'SimpleCropView|jitpack.io' app/build.gradle settings.gradle || true
     
           
 
