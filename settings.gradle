@@ -1,6 +1,3 @@
-rootProject.name = 'BarcodeScanner'
-include ':app'
-
 pluginManagement {
     repositories {
         google()
@@ -8,6 +5,11 @@ pluginManagement {
         maven { url 'https://jitpack.io' }
     }
 }
+
+rootProject.name = 'BarcodeScanner'
+include ':app'
+
+
 
 dependencyResolutionManagement {
     // Ensure settings.gradle controls repos (so app & plugins see JitPack + Central)
