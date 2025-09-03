@@ -44,15 +44,20 @@ jobs:
           java -version
           $HOME/gradle-7.2/bin/gradle -v
 
+
+
+            - name: Show cropper dep + repos
+        run: |
+            grep -nE 'SimpleCropView|jitpack.io' app/build.gradle settings.gradle || true
+    
+          
+
       - name: Build Debug APK
         run: |
           $HOME/gradle-7.2/bin/gradle --no-daemon --stacktrace clean :app:assembleDebug
 
 
-      - name: Show cropper dep + repos
-        run: |
-            grep -nE 'SimpleCropView|jitpack.io' app/build.gradle settings.gradle || true
-    
+
 
 
       - name: Upload APK
